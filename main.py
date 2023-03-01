@@ -3,7 +3,7 @@ from docx import Document
 from docx.shared import RGBColor
 from docx.enum.text import WD_COLOR_INDEX
 
-document = Document('variant12.docx')
+document = Document('variant07.docx')
 paragraphs = document.paragraphs
 
 def Spacing(run):
