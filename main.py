@@ -6,12 +6,6 @@ from docx.enum.text import WD_COLOR_INDEX
 document = Document('variant07.docx')
 paragraphs = document.paragraphs
 
-def Spacing(run):
-    return run._r.get_or_add_rPr().xpath("./w:spacing")
-
-def Scale(run):
-    return run._r.get_or_add_rPr().xpath("./w:w")
-
 def main():
     code = ""
     count_color = 0
@@ -25,8 +19,8 @@ def main():
             font_color = run.font.color.rgb
             font_highlight_color = run.font.highlight_color
             font_size = run.font.size
-            font_scale = Scale(run)
-            font_spacing = Spacing(run)
+            font_scale = run._r.get_or_add_rPr().xpath("./w:w")
+            font_spacing = run._r.get_or_add_rPr().xpath("./w:spacing")
 
             if (font_color != RGBColor(0, 0, 0) or
                     font_size.pt != 12.0 or
@@ -48,6 +42,7 @@ def main():
             else:
                 for i in range(len(run.text)):
                     code += '0'
+    # print(code)
 
     method = max(count_scale, count_spacing, count_highlight, count_size, count_color)
 
@@ -63,7 +58,6 @@ def main():
         print("Способ форматирования: по цвету символов")
 
     code += "0000"
-    # print(code)
 
     text = MTK2.Decode(code)
     print('МТК2:', text)
